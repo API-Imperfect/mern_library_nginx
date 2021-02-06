@@ -7,8 +7,13 @@ services:
          context: ./server
          dockerfile: Dockerfile.dev
       container_name: library_mern_nginx
+      # volumes allow sharing of data in run-time between host and container
       volumes:
+      # don't overwrite this folder in container with the local one  
          - /app/node_modules
+      # map current local directory to the /app inside the container
+      #This is a must for development in order to update our container whenever a change to the source code is made. Without this, you would have to rebuild the image each time you make a change to source code.
+   
          - ./server:/app
       ports:
          - 5000:5000
@@ -29,10 +34,13 @@ services:
          MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
          MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
       volumes:
+        # for persistence storage
          - mongodb-data:/data/db
       networks:
          - library-mern-api
-
+    
+      # mongo-express should only be used privately for development purposes.
+      # It helps us interact with a mongoDB database using our browser
    mongo-express:
       image: mongo-express
       depends_on:
