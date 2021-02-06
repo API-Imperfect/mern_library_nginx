@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+   library-api:
+      restart: always
+      build:
+         context: ./server
+         dockerfile: Dockerfile.dev
+      container_name: library_mern_nginx
+      volumes:
+         - /app/node_modules
+         - ./server:/app
+      ports:
+         - 5000:5000
+      depends_on:
+         - mongodb
+      environment:
+         NODE_ENV: ${NODE_ENV}
+         MONGO_URI: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb
+      networks:
+         - library-mern-api
+
+   mongodb:
+      image: mongo
+      restart: always
+      ports:
+         - 27017:27017
+      environment:
+         MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+         MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      volumes:
+         - mongodb-data:/data/db
+      networks:
+         - library-mern-api
+
+   mongo-express:
+      image: mongo-express
+      depends_on:
+         - mongodb
+      ports:
+         - 8081:8081
+      environment:
+         ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USERNAME}
+         ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+         ME_CONFIG_MONGODB_SERVER: mongodb
+         ME_CONFIG_BASICAUTH_USERNAME: admin
+         ME_CONFIG_BASICAUTH_PASSWORD: admin123456
+      volumes:
+         - mongodb-data
+      networks:
+         - library-mern-api
+
+networks:
+   library-mern-api:
+      driver: bridge
+
+volumes:
+   mongodb-data:
+      driver: local
