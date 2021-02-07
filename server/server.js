@@ -3,6 +3,7 @@ const express = require("express");
 const connectToDB = require("./database/db");
 const ErrorsMiddleware = require("./middleware/errorMiddleware");
 const LibraryError = require("./utils/libraryError");
+const bookRoutes = require("./routes/bookRoutes");
 
 process.on("uncaughtException", (error) => {
     console.log("Uncaught Exception..... 💣 🔥 stopping the server....");
@@ -28,6 +29,7 @@ app.get("/test", (req, res) => {
         Hi: "Welcome to the MERN Library API",
     });
 });
+app.use("/api/v1/", bookRoutes);
 
 // Error middleware
 app.all("*", (req, res, next) => {
