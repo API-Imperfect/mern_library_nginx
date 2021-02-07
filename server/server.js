@@ -47,10 +47,12 @@ const server = app.listen(
     )
 );
 
+// Unhandled Rejection
 process.on("unhandledRejection", (error) => {
     console.log("Unhandled Rejection..... 💣 🔥 stopping the server....");
     console.log(error.name, error.message);
     server.close(() => {
+        // exit code 1 means that there is an issue that caused the program to exit
         process.exit(1);
     });
 });
