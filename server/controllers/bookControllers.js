@@ -7,7 +7,7 @@ const LibraryError = require("../utils/libraryError");
 // $-auth    Public
 exports.createBook = AsyncManager(async (req, res, next) => {
     const newbook = await Book.create(req.body);
-    return res.status(201).json({ success: true, data: newbook });
+    return res.status(201).json(newbook);
 });
 
 // $-title   Get all Books
@@ -15,9 +15,7 @@ exports.createBook = AsyncManager(async (req, res, next) => {
 // $-auth    Public
 exports.getAllBooks = AsyncManager(async (req, res, next) => {
     const books = await Book.find();
-    return res
-        .status(200)
-        .json({ success: true, total: books.length, data: books });
+    return res.status(200).json(books);
 });
 
 // $-title   Get Single Book
@@ -29,7 +27,7 @@ exports.getBook = AsyncManager(async (req, res, next) => {
     if (!book) {
         return next(new LibraryError(`That book is not available`, 404));
     }
-    return res.status(200).json({ success: true, data: book });
+    return res.status(200).json(book);
 });
 
 // $-title   Get Published Books
@@ -37,9 +35,7 @@ exports.getBook = AsyncManager(async (req, res, next) => {
 // $-auth    Public
 exports.getPublishedBooks = AsyncManager(async (req, res, next) => {
     const books = await Book.find({ published: true });
-    return res
-        .status(200)
-        .json({ success: true, total: books.length, data: books });
+    return res.status(200).json(books);
 });
 
 // $-title   Update Book
@@ -56,7 +52,7 @@ exports.updateBook = AsyncManager(async (req, res, next) => {
         new: true,
         runValidators: true,
     });
-    return res.status(200).json({ success: true, data: book });
+    return res.status(200).json(book);
 });
 
 // $-title   Delete Book
@@ -70,5 +66,5 @@ exports.deleteBook = AsyncManager(async (req, res, next) => {
     }
 
     await book.remove();
-    return res.status(200).json({ success: true, data: {} });
+    return res.status(200).json({ message: "The book has been deleted" });
 });

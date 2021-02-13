@@ -12,6 +12,10 @@ const BookSchema = new mongoose.Schema(
         },
         slug: String,
         published: { type: Boolean, default: false },
+        description: {
+            type: String,
+            required: [true, "Please add a subtitile"],
+        },
         subtitle: {
             type: String,
             required: [true, "Please add a subtitile"],
