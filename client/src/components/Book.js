@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Book = ({ book }) => {
+const Book = ({ book, deleteHandler }) => {
    return (
       <Card className="my-3 p-3 rounded">
          <Card.Body>
@@ -17,6 +17,9 @@ const Book = ({ book }) => {
             <Card.Text>{book.description}</Card.Text>
             <Card.Text as="h6">ISBN {book.isbn}</Card.Text>
             <Button variant="primary">{book.author}</Button>
+            <Button variant="danger" onClick={() => deleteHandler(book._id)}>
+               <i className="fas fa-trash"></i>
+            </Button>
          </Card.Body>
       </Card>
    );
