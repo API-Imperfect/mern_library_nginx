@@ -1,4 +1,4 @@
-# Simple Map of Schools
+# Simple Library MERN App
 
 <p>
   <a href="https://twitter.com/AlphaOmondi" target="_blank">
@@ -6,7 +6,7 @@
   </a>
 </p>
 
-👋 This simple map is Built with GeoDjango,Docker,NGINX,React and Leaflet.
+👋 This simple Library MERN Book Application built to demonstrate how The MERN stack can be used with Docker and NGINX
 
 ## Run the Application
 
