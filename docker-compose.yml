@@ -83,7 +83,7 @@ services:
          context: ./nginx
          dockerfile: Dockerfile.dev
       ports:
-         - 8080:80
+         - 8082:80
       networks:
          - library-mern-api
 
